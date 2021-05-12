@@ -38,12 +38,12 @@ describe "add to cart" do
     product3.save!
 
     ar = [product, product1, product2, product3]
-    @checkout= TestHelper.create_cart ar
-    @checkout.save!
+    checkout= TestHelper.create_cart ar
+    checkout.save!
   end
   it 'return correct sales tax' do
-    expect(@checkout.subtotal).to eq(74.64)
-    expect(@checkout.sales_tax).to eq(6.66)
+    expect(checkout.subtotal).to eq(74.64)
+    expect(checkout.sales_tax).to eq(6.66)
   end
 end
 
@@ -58,10 +58,10 @@ describe "print csv" do
       product.save!
       ar << product
     end
-    @checkout1= TestHelper.create_cart ar
-    @checkout1.save!
+    checkout1= TestHelper.create_cart ar
+    checkout1.save!
     rows = []
-    @checkout1.cart_items.each do |t|
+    checkout1.cart_items.each do |t|
       line = [t.quantity.to_s,t.product.name.to_s, t.subtotal.to_s]
       rows << line
     end
@@ -69,6 +69,6 @@ describe "print csv" do
   end
   it 'print correct csv' do
     res ="1, imported bottle of perfume,32.19\n1, bottle of perfume,20.89\n1, packet of headache pills,9.75\n1, box of imported chocolates,11.81\nSales Taxes: 6.66 + '\n'Total: 74.64 + '\n'"
-    expect(@checkout1.print_csv).to eq(res)
+    expect(checkout1.print_csv).to eq(res)
   end
 end
